@@ -1,0 +1,38 @@
+name: MAHIR SMS Bot 24/7
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */4 * * *' # প্রতি ৪ ঘণ্টা পর পর ফ্রেশ স্টার্ট হবে
+
+concurrency:
+  group: mahir-sms-bot
+  cancel-in-progress: true # নতুন রান শুরু হলে পুরনোটা অটো বন্ধ হয়ে যাবে
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340 # ৫ ঘণ্টা ৪০ মিনিট পর অটো ক্যানসেল (সেফটি)
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install Dependencies
+      run: |
+        pip install requests playwright
+        playwright install chromium --with-deps
+
+    - name: Start Mahir Bot
+      env:
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        CHAT_ID: ${{ secrets.CHAT_ID }}
+        MY_USER: ${{ secrets.MY_USER }}
+        MY_PASS: ${{ secrets.MY_PASS }}
+      run: python -u main.py
+      
