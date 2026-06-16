@@ -11,8 +11,8 @@ CHAT_ID = os.getenv("CHAT_ID")
 MY_USER = os.getenv("MY_USER")
 MY_PASS = os.getenv("MY_PASS")
 
-TARGET_URL = "http://139.99.69.196/ints/client/SMSCDRStats"
-LOGIN_URL = "http://139.99.69.196/ints/login"
+TARGET_URL = "http://94.23.120.156/ints/client/SMSCDRStats"
+LOGIN_URL = "http://94.23.120.156/ints/login"
 
 sent_msgs = {}
 
@@ -159,4 +159,4 @@ async def start_bot():
 
 if __name__ == "__main__":
     asyncio.run(start_bot())
-  
+    
